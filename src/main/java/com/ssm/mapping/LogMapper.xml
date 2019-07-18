@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.LogMapper" >
+  <resultMap id="logMap" type="com.ssm.pojo.Log" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="file" property="file" jdbcType="VARCHAR" />
+    <result column="detail" property="detail" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+  <insert id="insertLog" parameterType="com.ssm.pojo.Log" >
+    INSERT INTO compilelog(file, detail, time) 
+    VALUES (#{file,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, now())
+  </insert>
+
+	<select id="getAllLog" resultMap="logMap">
+		select file, detail, time
+		from compilelog
+		where userid = "default"
+		order by time desc;
+	</select>
+	
+</mapper>
